@@ -35,7 +35,7 @@ const SignUpForm = () => {
         const response = await createAuthUserWithEmailAndPassword(email, password);
         console.log(response);
         const {user} = response;
-        createUserDocumentFromAuth(user, {displayName});
+        await createUserDocumentFromAuth(user, {displayName});
         resetFormFields();
       } catch(error) {
         if (error.code === 'auth/email-already-in-use') {
@@ -53,7 +53,7 @@ const SignUpForm = () => {
     };
 
     return (
-        <div className='sign-up container'>
+        <div className='sign-up-container'>
             <h2>Don't have an account?</h2>
             <span>Sign up with your email and password</span>
             <form onSubmit={handleSubmit}>
