@@ -3,14 +3,7 @@ import './categories.styles.scss';
 import Home from './routes/home/home.component';
 import Navigation from './routes/navigation/navigation.component';
 import Authentication from './routes/authentication/authentication.component';
-
-function Shop() {
-  return (
-    <div>
-      I am the shop element
-    </div>
-  );
-};
+import Shop from './routes/shop/shop.component';
 
 function App() {
   return (
