@@ -9,7 +9,7 @@ const CategoryPreview = ({ title, products }) => {
             <Link className='title' to={title}>{title.toUpperCase()}</Link>
         </h2>
         <div className='preview'>
-            {
+            { 
                 products
                     .filter((_, idx) => idx < 4)
                     .map(product => 
