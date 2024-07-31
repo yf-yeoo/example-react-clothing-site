@@ -57,7 +57,7 @@ const firebaseConfig = {
 
   export const getCategoriesAndDocuments = async () => {
     const collectionRef = collection(db, 'categories');
-    const q = query(collectionRef)
+    const q = query(collectionRef);
 
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map(docSnapshot => docSnapshot.data());
