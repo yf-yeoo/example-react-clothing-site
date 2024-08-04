@@ -20,25 +20,7 @@ const firebaseConfig = {
   })
 
   export const auth = getAuth();
-  export const signInWithGooglePopup = async () => {
-    return (
-        signInWithPopup(auth, provider).then((result) => {    
-            console.log(result);
-            const {user} = result;
-            const userDocRef = createUserDocumentFromAuth(user);
-        }).catch((error) => {
-            // Handle Errors here.
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            // The email of the user's account used.
-            const email = error.customData.email;
-            // The AuthCredential type that was used.
-            const credential = GoogleAuthProvider.credentialFromError(error);
-            // ...
-            console.log(errorCode,errorMessage,email,credential);
-        })
-    );
-};
+  export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
 
   export const db = getFirestore();
 
@@ -67,10 +49,10 @@ const firebaseConfig = {
     if (!userAuth) return;
     const userDocRef = await doc(db, 'users', userAuth.uid);
 
-    console.log(userDocRef);
+    // console.log(userDocRef);
 
     const userSnapshot = await getDoc(userDocRef);
-    console.log(userSnapshot);
+    // console.log(userSnapshot);
 
     if(!userSnapshot.exists()) {
       const {displayName, email} = userAuth;
@@ -105,3 +87,16 @@ const firebaseConfig = {
   export const signOutUser = async () => await signOut(auth);
 
   export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback);
+
+  export const getCurrentUser = () => {
+    return new Promise((resolve, reject) => {
+      const unsubscribe = onAuthStateChanged(
+        auth,
+        (userAuth) => {
+          unsubscribe();
+          resolve(userAuth);
+        },
+        reject
+      )
+    })
+  }
